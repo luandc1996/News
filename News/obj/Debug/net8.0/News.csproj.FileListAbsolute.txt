@@ -31,3 +31,4 @@ D:\DC1996N538\News\obj\Debug\net8.0\refint\News.dll
 D:\DC1996N538\News\obj\Debug\net8.0\News.pdb
 D:\DC1996N538\News\obj\Debug\net8.0\News.genruntimeconfig.cache
 D:\DC1996N538\News\obj\Debug\net8.0\ref\News.dll
+D:\DC1996N538\News\obj\Debug\net8.0\News.sourcelink.json
