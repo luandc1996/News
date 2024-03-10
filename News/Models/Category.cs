@@ -8,8 +8,8 @@ namespace News.Models
     public class Category
     {
         public int Id {get; set;}
-        public int Name {get; set;}
-        public int Slug {get; set;}
+        public string Name {get; set;}
+        public string Slug {get; set;}
 
         public List<Article> Articles {get; set;} = new List<Article>();
     }

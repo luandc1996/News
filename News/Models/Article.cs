@@ -11,12 +11,14 @@ namespace News.Models
         public string Title {get; set;} = string.Empty;
         public string Content {get; set;} = string.Empty;
         public bool Status {get; set;}
-        public int CatId {get; set;}
         public int? UserId {get; set;}
 
         public User? User {get; set;}
 
+        // public int? CategoryId {get; set;}
 
-        public DateTime CreatedAt {get; set;} = DateTime.Now;
+        // public Category? Category {get; set;}
+        public DateTime? CreatedAt {get; set;} = DateTime.Now;
+        public DateTime? UpdatedAt {get; set;} = DateTime.Now;
     }
 }
