@@ -68,7 +68,7 @@
         "runtime": {
           "lib/net8.0/Microsoft.AspNetCore.OpenApi.dll": {
             "assemblyVersion": "8.0.0.0",
-            "fileVersion": "0.0.0.0"
+            "fileVersion": "8.0.23.53112"
           }
         }
       },
@@ -767,7 +767,8 @@
           "runtimes/unix/lib/net6.0/System.Drawing.Common.dll": {
             "rid": "unix",
             "assetType": "runtime",
-            "fileVersion": "0.0.0.0"
+            "assemblyVersion": "6.0.0.0",
+            "fileVersion": "6.0.21.52210"
           },
           "runtimes/win/lib/net6.0/System.Drawing.Common.dll": {
             "rid": "win",
