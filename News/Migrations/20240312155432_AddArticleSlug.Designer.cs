@@ -12,8 +12,8 @@ using News.Data;
 namespace News.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240310123502_init")]
-    partial class init
+    [Migration("20240312155432_AddArticleSlug")]
+    partial class AddArticleSlug
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,6 +42,10 @@ namespace News.Migrations
 
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -111,18 +115,27 @@ namespace News.Migrations
 
             modelBuilder.Entity("News.Models.Article", b =>
                 {
-                    b.HasOne("News.Models.Category", null)
+                    b.HasOne("News.Models.Category", "Category")
                         .WithMany("Articles")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("News.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                        .WithMany("Articles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Category");
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("News.Models.Category", b =>
+                {
+                    b.Navigation("Articles");
+                });
+
+            modelBuilder.Entity("News.Models.User", b =>
                 {
                     b.Navigation("Articles");
                 });

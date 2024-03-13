@@ -12,8 +12,8 @@ using News.Data;
 namespace News.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240310123703_updateDB")]
-    partial class updateDB
+    [Migration("20240312152710_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -111,18 +111,27 @@ namespace News.Migrations
 
             modelBuilder.Entity("News.Models.Article", b =>
                 {
-                    b.HasOne("News.Models.Category", null)
+                    b.HasOne("News.Models.Category", "Category")
                         .WithMany("Articles")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("News.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                        .WithMany("Articles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Category");
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("News.Models.Category", b =>
+                {
+                    b.Navigation("Articles");
+                });
+
+            modelBuilder.Entity("News.Models.User", b =>
                 {
                     b.Navigation("Articles");
                 });
