@@ -18,7 +18,7 @@ namespace News.Mappers
                 Username = userModel.Username,
                 Password = userModel.Password,
                 Status = userModel.Status,
-                Articles = userModel.Articles.Select(a => a.ToArticleDto()).ToList()
+                Articles = userModel.Articles?.Select(a => a.ToArticleDto()).ToList()
             };
         }
 
@@ -29,7 +29,7 @@ namespace News.Mappers
                 Name = userDto.Name,
                 Username = userDto.Username,
                 Password = userDto.Password,
-                Status = userDto.Status,
+                Status = userDto.Status
             };
         }
     }

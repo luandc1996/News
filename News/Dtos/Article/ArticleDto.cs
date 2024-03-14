@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using News.Dtos.Category;
+using News.Dtos.User;
 using News.Models;
 
 namespace News.Dtos.Article
@@ -15,5 +17,7 @@ namespace News.Dtos.Article
         public bool Status {get; set;}
         public int? UserId {get; set;}
         public int? CategoryId {get; set;}
+        public UserDto? User {get; set;}
+        public CategoryDto? Category {get; set;}
     }
 }

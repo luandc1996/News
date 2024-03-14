@@ -38,12 +38,12 @@ namespace News.Repository
 
         public async Task<List<Category>> GetAllAsync()
         {
-            return await _context.Categories.ToListAsync();
+            return await _context.Categories.Include(a => a.Articles).ToListAsync();
         }
 
         public async Task<Category?> GetByIdAsync(int id)
         {
-            return await _context.Categories.FindAsync(id);
+            return await _context.Categories.Include(a => a.Articles).FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task<Category?> UpdateAsync(int id, UpdateCategoryRequestDto categoryDto)

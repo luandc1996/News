@@ -20,7 +20,7 @@ namespace News.Mappers
                 Status = articleModel.Status,
                 UserId = articleModel.UserId,
                 CategoryId = articleModel.CategoryId,
-                //User = articleModel.User.Select(u => u.ToUserDto()).ToList()
+                //User = articleModel.User.sE
             };
         }
 

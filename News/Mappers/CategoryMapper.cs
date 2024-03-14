@@ -17,7 +17,7 @@ namespace News.Mappers
                 Id = categoryModel.Id,
                 Name = categoryModel.Name,
                 Slug = categoryModel.Slug,
-                //Articles = categoryModel.Articles.Select(a => a.ToArticleDto()).ToList()
+                Articles = categoryModel.Articles?.Select(a => a.ToArticleDto()).ToList()
             };
         }
 
