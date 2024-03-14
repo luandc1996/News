@@ -21,5 +21,16 @@ namespace News.Mappers
                 Articles = userModel.Articles.Select(a => a.ToArticleDto()).ToList()
             };
         }
+
+        public static User ToUserFromCreateDTO(this CreateUserRequestDto userDto)
+        {
+            return new User
+            {
+                Name = userDto.Name,
+                Username = userDto.Username,
+                Password = userDto.Password,
+                Status = userDto.Status,
+            };
+        }
     }
 }
