@@ -31,7 +31,6 @@ namespace News.Data
                 .HasForeignKey(c => c.CategoryId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-
             modelBuilder.Entity<Category>()
                 .HasMany(a => a.Articles)
                 .WithOne(a => a.Category)

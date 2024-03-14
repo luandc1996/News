@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using News.Data;
 using News.Dtos.Article;
+using News.Interfaces;
 using News.Mappers;
 
 namespace News.Controllers
@@ -15,26 +16,26 @@ namespace News.Controllers
     public class ArticleController: ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly IArticleRepository _articleRepo;
         
-        public ArticleController(AppDbContext context)
+        public ArticleController(AppDbContext context, IArticleRepository articleRepo)
         {
             _context = context;
+            _articleRepo = articleRepo;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var articles = await _context.Articles.ToListAsync();
-
+            var articles = await _articleRepo.GetAllAsync();
             var modelArticles = articles.Select(s => s.ToArticleDto());
-
             return Ok(modelArticles);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById([FromRoute] int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var article = _context.Articles.Find(id);
+            var article = await _articleRepo.GetByIdAsync(id);
             if (article != null) {
                 return Ok(article.ToArticleDto());
             }
@@ -42,44 +43,32 @@ namespace News.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CreateArticleRequestDto articleDto)
+        public async Task<IActionResult> Create([FromBody] CreateArticleRequestDto articleDto)
         {
             var articleModel = articleDto.ToArticleFromCreateDTO();
-            _context.Articles.Add(articleModel);
-            _context.SaveChanges();
-
+            await _articleRepo.CreateAsync(articleModel);
             return CreatedAtAction(nameof(GetById), new { id = articleModel.Id}, articleModel.ToArticleDto());
         }
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult Update([FromRoute] int id, [FromBody] UpdateArticleRequestDto articleDto)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateArticleRequestDto articleDto)
         {
-            var articleModel = _context.Articles.FirstOrDefault(a => a.Id == id);
+            var articleModel = await _articleRepo.UpdateAsync(id, articleDto);
             if (articleModel == null) {
                 return NotFound();
             }
-
-            articleModel.Title = articleDto.Title;
-            articleModel.Slug = articleDto.Slug;
-            articleModel.Content = articleDto.Content;
-            articleModel.Status = articleDto.Status;
-            articleModel.CategoryId = articleDto.CategoryId;
-            _context.SaveChanges();
             return Ok(articleModel.ToArticleDto());
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var articleModel = _context.Articles.FirstOrDefault(a => a.Id == id);
+            var articleModel = await _articleRepo.DeleteAsync(id);
             if (articleModel == null) {
                 return NotFound();
             }
-            _context.Articles.Remove(articleModel);
-            _context.SaveChanges();
-
             return NoContent();
         }
     }
