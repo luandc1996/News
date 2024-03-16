@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using News.Data;
 using News.Interfaces;
@@ -24,6 +25,11 @@ builder.Services.AddDbContext<AppDbContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+///builder.Services.AddAuthorization();
+//builder.Services.AddIdentityApiEndpoints<IdentityUser>().AddEntityFrameworkStores<AppDbContext>();
+
+builder.Services.AddRazorPages();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -33,6 +39,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+//app.MapIdentityApi<IdentityUser>();
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+//app.UseAuthorization();
 app.MapControllers();
+app.MapRazorPages();
 app.Run();
