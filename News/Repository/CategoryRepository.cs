@@ -7,6 +7,7 @@ using News.Data;
 using News.Dtos.Category;
 using News.Interfaces;
 using News.Models;
+using Slugify;
 
 namespace News.Repository
 {
@@ -20,6 +21,8 @@ namespace News.Repository
 
         public async Task<Category?> CreateAsync(Category categoryModel)
         {
+            SlugHelper slugHelper = new SlugHelper();
+            categoryModel.Slug = slugHelper.GenerateSlug(categoryModel.Name);
             await _context.Categories.AddAsync(categoryModel);
             await _context.SaveChangesAsync();
             return categoryModel;
@@ -52,8 +55,9 @@ namespace News.Repository
             if (categoryModel == null) {
                 return null;
             }
+            SlugHelper slugHelper = new SlugHelper();
             categoryModel.Name = categoryDto.Name;
-            categoryModel.Slug = categoryDto.Slug;
+            categoryModel.Slug = slugHelper.GenerateSlug(categoryDto.Name);
             await _context.SaveChangesAsync();
             
             return categoryModel;

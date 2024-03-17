@@ -1,11 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using News.Interfaces;
+using News.Models;
 
-namespace News.Pages.Article;
+namespace News.Pages.Articles;
 
 public class Index : PageModel
 {
-    public void OnGet()
+    private readonly IArticleRepository _articleRepo;
+
+    public Index(IArticleRepository articleRepository) 
     {
-        
+        _articleRepo = articleRepository;
+    }
+
+    public IList<Article> Articles {get; set;}
+    
+    public async Task OnGetAsync()
+    {
+        Articles = await _articleRepo.GetAllAsync();   
     }
 }

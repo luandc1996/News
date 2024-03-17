@@ -11,6 +11,6 @@ namespace News.Models
         public string? Name {get; set;}
         public string? Slug {get; set;}
 
-        public List<Article>? Articles { get; set;}
+        public IEnumerable<Article>? Articles { get; set;}
     }
 }

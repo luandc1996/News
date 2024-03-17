@@ -1,5 +1,5 @@
 ﻿@page
-@model News.Pages.Article.Index
+@model News.Pages.Articles.Index
 
 @{
     ViewData["Title"] = "Danh Sách Bài Viết";
@@ -7,33 +7,46 @@
 
 <h3>@ViewData["Title"]</h3>
 
-
+<p>
+  <a asp-page="Add">Thêm bài viết</a>
+</p>
 <table class="table table-bordered">
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Tiêu đề</th>
+      <th scope="col">Đường dẫn</th>
+      <th scope="col">Chuyên mục</th>
+      <th scope="col">Tác giả</th>
+      <th scope="col">Ngày tạo</th>
+      <th scope="col">Cập nhật</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td></td>
-    </tr>
+    @foreach(var item in Model.Articles)
+    {
+      <tr>
+        <th>@Html.DisplayFor(m => item.Id)</th>
+        <td>@Html.DisplayFor(m => item.Title)</td>
+        <td>@Html.DisplayFor(m => item.Slug)</td>
+        <td>@Html.DisplayFor(m => item.Category!.Name)</td>
+        <td>@Html.DisplayFor(m => item.User!.Name)</td>
+        <td>@Html.DisplayFor(m => item.CreatedAt)</td>
+        <td>@Html.DisplayFor(m => item.UpdatedAt)</td>
+        <td>
+          <a asp-page="./Details" asp-route-id="@item.Id">Chi tiết</a> |
+          <a asp-page="./Edit" asp-route-id="@item.Id">Chỉnh sửa</a> |
+          <a asp-page="./Delete" asp-route-id="@item.Id">Xóa</a> |
+        </td>
+      </tr>
+    }
   </tbody>
 </table>
+
+
+<style>
+  .table-bordered {
+    border: 1px solid;
+  }
+</style>

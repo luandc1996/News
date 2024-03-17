@@ -7,6 +7,7 @@ using News.Data;
 using News.Dtos.Article;
 using News.Interfaces;
 using News.Models;
+using Slugify;
 
 namespace News.Repository
 {
@@ -20,6 +21,8 @@ namespace News.Repository
 
         public async Task<Article?> CreateAsync(Article articleModel)
         {
+            SlugHelper slugHelper = new SlugHelper();
+            articleModel.Slug = slugHelper.GenerateSlug(articleModel.Title);
             await _context.Articles.AddAsync(articleModel);
             await _context.SaveChangesAsync();
             return articleModel;
@@ -38,12 +41,18 @@ namespace News.Repository
 
         public async Task<List<Article>> GetAllAsync()
         {
-            return await _context.Articles.ToListAsync();
+            return await _context.Articles
+                .Include(a => a.Category)
+                .Include(a => a.User)
+                .ToListAsync();
         }
 
         public async Task<Article?> GetByIdAsync(int id)
         {
-            return await _context.Articles.FindAsync(id);
+            return await _context.Articles
+                .Include(a => a.Category)
+                .Include(a => a.User)
+                .FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task<Article?> UpdateAsync(int id, UpdateArticleRequestDto articleDto)
@@ -52,12 +61,14 @@ namespace News.Repository
             if (articleModel == null) {
                 return null;
             }
+            SlugHelper slugHelper = new SlugHelper();
             articleModel.Title = articleDto.Title;
-            articleModel.Slug = articleDto.Slug;
+            articleModel.Slug = slugHelper.GenerateSlug(articleDto.Title);
             articleModel.Content = articleDto.Content;
             articleModel.Status = articleDto.Status;
             articleModel.CategoryId = articleDto.CategoryId;
-            articleModel.UserId = 1;
+            //articleModel.UserId = 1;
+            articleModel.UpdatedAt = DateTime.Now;
             await _context.SaveChangesAsync();
             
             return articleModel;

@@ -15,9 +15,9 @@ namespace News.Mappers
             {
                 Id = userModel.Id,
                 Name = userModel.Name,
-                Username = userModel.Username,
-                Password = userModel.Password,
-                Status = userModel.Status,
+                //Username = userModel.Username,
+                //Password = userModel.Password,
+                //Status = userModel.Status,
                 Articles = userModel.Articles?.Select(a => a.ToArticleDto()).ToList()
             };
         }

@@ -12,6 +12,6 @@ namespace News.Models
         public string? Username {get; set;}
         public string? Password {get; set;}
         public bool Status {get; set;}
-        public List<Article>? Articles { get; set;}
+        public IEnumerable<Article>? Articles { get; set;}
     }
 }

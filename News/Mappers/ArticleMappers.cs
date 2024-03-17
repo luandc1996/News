@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using News.Dtos.Article;
+using News.Dtos.Category;
+using News.Dtos.User;
 using News.Models;
 
 namespace News.Mappers
@@ -20,7 +22,15 @@ namespace News.Mappers
                 Status = articleModel.Status,
                 UserId = articleModel.UserId,
                 CategoryId = articleModel.CategoryId,
-                //User = articleModel.User.sE
+                Category = (articleModel.Category != null) ? new CategoryDto() {
+                    Id = articleModel.Category.Id,
+                    Name = articleModel.Category.Name,
+                    Slug = articleModel.Category.Slug
+                } : null,
+                User = (articleModel.User != null) ? new UserDto() {
+                    Id = articleModel.User.Id,
+                    Name = articleModel.User.Name,
+                } : null,
             };
         }
 
@@ -29,7 +39,6 @@ namespace News.Mappers
             return new Article
             {
                 Title = articleDto.Title,
-                Slug = articleDto.Slug,
                 Content = articleDto.Content,
                 Status = articleDto.Status,
                 UserId = articleDto.UserId,

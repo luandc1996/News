@@ -26,7 +26,7 @@ namespace News.Mappers
             return new Category
             {
                 Name = categoryDto.Name,
-                Slug = categoryDto.Slug
+                //Slug = categoryDto.Slug
             };
         }
     }
