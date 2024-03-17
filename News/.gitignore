@@ -2,3 +2,8 @@
 /bin/
 /.idea/
 /obj/
+.vs
+.vscode
+/.vs
+/.vscode
+.fake

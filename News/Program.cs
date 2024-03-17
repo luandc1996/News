@@ -28,6 +28,8 @@ builder.Services.AddDbContext<AppDbContext>(options => {
 ///builder.Services.AddAuthorization();
 //builder.Services.AddIdentityApiEndpoints<IdentityUser>().AddEntityFrameworkStores<AppDbContext>();
 
+builder.Services.AddScoped(client => new HttpClient { BaseAddress = new Uri("http://localhost:5276") });
+
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
