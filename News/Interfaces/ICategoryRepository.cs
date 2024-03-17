@@ -14,5 +14,6 @@ namespace News.Interfaces
         Task<Category?> CreateAsync(Category categoryModel);
         Task<Category?> UpdateAsync(int id, UpdateCategoryRequestDto categoryDto);
         Task<Category?> DeleteAsync(int id);
+        Task<Category?> CheckDuplicate(string slug);
     }
 }

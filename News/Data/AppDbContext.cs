@@ -35,7 +35,6 @@ namespace News.Data
                 .HasMany(a => a.Articles)
                 .WithOne(a => a.Category)
                 .HasForeignKey(a => a.CategoryId);
-
         }
     }
 }

@@ -46,6 +46,7 @@ namespace News.Controllers
         public async Task<IActionResult> Create([FromBody] CreateArticleRequestDto articleDto)
         {
             var articleModel = articleDto.ToArticleFromCreateDTO();
+            articleModel.UserId = 1;
             await _articleRepo.CreateAsync(articleModel);
             return CreatedAtAction(nameof(GetById), new { id = articleModel.Id}, articleModel.ToArticleDto());
         }

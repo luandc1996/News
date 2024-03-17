@@ -7,6 +7,7 @@ using News.Data;
 using News.Dtos.Category;
 using News.Interfaces;
 using News.Mappers;
+using Slugify;
 
 namespace News.Controllers
 {
@@ -45,6 +46,17 @@ namespace News.Controllers
         public async Task<IActionResult> Create([FromBody] CreateCategoryRequestDto categoryDto)
         {
             var categoryModel = categoryDto.ToCategoryFromCreateDTO();
+            // Xu ly du lieu và kiểm tra trùng lặp
+            SlugHelper slugHelper = new SlugHelper();
+            categoryModel.Slug = slugHelper.GenerateSlug(categoryModel.Name);
+            categoryModel.ParentId = (categoryModel.ParentId != 0) ? categoryModel.ParentId : null;
+            if (categoryModel.Slug != "") {
+                var isExist = await _catRepo.CheckDuplicate(categoryModel.Slug);
+                if (isExist != null) {
+                    return BadRequest("Chuyên mục " + categoryModel.Name + " đã tồn tại");
+                }
+            }
+            // Xu ly luu
             await _catRepo.CreateAsync(categoryModel);
             return CreatedAtAction(nameof(GetById), new { id = categoryModel.Id}, categoryModel.ToCategoryDto());
         }

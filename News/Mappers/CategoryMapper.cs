@@ -17,6 +17,7 @@ namespace News.Mappers
                 Id = categoryModel.Id,
                 Name = categoryModel.Name,
                 Slug = categoryModel.Slug,
+                ParentId = categoryModel.ParentId,
             };
         }
 
@@ -36,6 +37,7 @@ namespace News.Mappers
             return new Category
             {
                 Name = categoryDto.Name,
+                ParentId = categoryDto.ParentId
                 //Slug = categoryDto.Slug
             };
         }

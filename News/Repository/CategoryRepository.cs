@@ -21,8 +21,6 @@ namespace News.Repository
 
         public async Task<Category?> CreateAsync(Category categoryModel)
         {
-            SlugHelper slugHelper = new SlugHelper();
-            categoryModel.Slug = slugHelper.GenerateSlug(categoryModel.Name);
             await _context.Categories.AddAsync(categoryModel);
             await _context.SaveChangesAsync();
             return categoryModel;
@@ -64,9 +62,22 @@ namespace News.Repository
             SlugHelper slugHelper = new SlugHelper();
             categoryModel.Name = categoryDto.Name;
             categoryModel.Slug = slugHelper.GenerateSlug(categoryDto.Name);
+            categoryModel.ParentId = (categoryDto.ParentId != 0) ? categoryDto.ParentId : null;
             await _context.SaveChangesAsync();
             
             return categoryModel;
         }
+
+        public async Task<Category?> CheckDuplicate(string slug)
+        {
+            var category = await _context.Categories.
+                Where(c => c.Slug == slug)
+                .FirstAsync();
+            if (category == null) {
+                return null;
+            }
+            return category;
+        }
+
     }
 }
