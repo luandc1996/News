@@ -38,12 +38,18 @@ namespace News.Repository
 
         public async Task<List<User>> GetAllAsync()
         {
-            return await _context.Users.Include(a => a.Articles).ToListAsync();
+            return await _context.Users
+                .Include(a => a.Articles)
+                .ThenInclude(a => a.Category)
+                .ToListAsync();
         }
 
         public async Task<User?> GetByIdAsync(int id)
         {
-            return await _context.Users.Include(a => a.Articles).FirstOrDefaultAsync(u => u.Id == id);
+            return await _context.Users
+                .Include(a => a.Articles)
+                .ThenInclude(a => a.Category)
+                .FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public async Task<User?> UpdateAsync(int id, UpdateUserRequestDto articleDto)

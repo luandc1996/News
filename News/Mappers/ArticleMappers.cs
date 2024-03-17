@@ -27,9 +27,9 @@ namespace News.Mappers
                     Name = articleModel.Category.Name,
                     Slug = articleModel.Category.Slug
                 } : null,
-                User = (articleModel.User != null) ? new UserDto() {
-                    Id = articleModel.User.Id,
-                    Name = articleModel.User.Name,
+                Author = (articleModel.Author != null) ? new UserDto() {
+                    Id = articleModel.Author.Id,
+                    Name = articleModel.Author.Name,
                 } : null,
             };
         }

@@ -7,9 +7,8 @@ using News.Models;
 
 namespace News.Dtos.User
 {
-    public class UserDto
+    public class UserArticleDto: UserDto
     {
-        public int Id {get; set;}
-        public string? Name {get; set;}
+        public IEnumerable<ArticleDto>? Articles { get; set;}
     }
 }

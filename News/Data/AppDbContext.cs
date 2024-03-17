@@ -20,7 +20,7 @@ namespace News.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Article>()
-                .HasOne(a => a.User)
+                .HasOne(a => a.Author)
                 .WithMany(a => a.Articles)
                 .HasForeignKey(a => a.UserId)
                 .OnDelete(DeleteBehavior.SetNull);

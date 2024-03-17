@@ -29,7 +29,7 @@ namespace News.Controllers
         public async Task<IActionResult> GetAll()
         {
             var users = await _userRepo.GetAllAsync();
-            var modelUser = users.Select(s => s.ToUserDto());
+            var modelUser = users.Select(s => s.ToUserWithArticleDto());
             return Ok(modelUser);
         }
 
@@ -38,7 +38,7 @@ namespace News.Controllers
         {
             var user = await _userRepo.GetByIdAsync(id);
             if (user != null) {
-                return Ok(user.ToUserDto());
+                return Ok(user.ToUserWithArticleDto());
             }
             return NotFound();
         }

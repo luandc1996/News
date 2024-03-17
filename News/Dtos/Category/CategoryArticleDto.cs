@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 using News.Dtos.Article;
 using News.Models;
 
-namespace News.Dtos.User
+namespace News.Dtos.Category
 {
-    public class UserDto
+    public class CategoryArticleDto: CategoryDto
     {
-        public int Id {get; set;}
-        public string? Name {get; set;}
+        public IEnumerable<ArticleDto>? Articles { get; set;}
     }
 }

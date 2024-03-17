@@ -15,9 +15,15 @@ namespace News.Mappers
             {
                 Id = userModel.Id,
                 Name = userModel.Name,
-                //Username = userModel.Username,
-                //Password = userModel.Password,
-                //Status = userModel.Status,
+            };
+        }
+
+        public static UserDto ToUserWithArticleDto(this User userModel)
+        {
+            return new UserArticleDto
+            {
+                Id = userModel.Id,
+                Name = userModel.Name,
                 Articles = userModel.Articles?.Select(a => a.ToArticleDto()).ToList()
             };
         }

@@ -43,7 +43,7 @@ namespace News.Repository
         {
             return await _context.Articles
                 .Include(a => a.Category)
-                .Include(a => a.User)
+                .Include(a => a.Author)
                 .ToListAsync();
         }
 
@@ -51,7 +51,7 @@ namespace News.Repository
         {
             return await _context.Articles
                 .Include(a => a.Category)
-                .Include(a => a.User)
+                .Include(a => a.Author)
                 .FirstOrDefaultAsync(a => a.Id == id);
         }
 

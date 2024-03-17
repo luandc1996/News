@@ -17,7 +17,7 @@ namespace News.Dtos.Article
         public bool Status {get; set;}
         public int? UserId {get; set;}
         public int? CategoryId {get; set;}
-        public UserDto? User {get; set;}
+        public UserDto? Author {get; set;}
         public CategoryDto? Category {get; set;}
     }
 }

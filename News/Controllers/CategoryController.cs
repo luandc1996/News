@@ -27,7 +27,7 @@ namespace News.Controllers
         public async Task<IActionResult> GetAll()
         {
             var categories = await _catRepo.GetAllAsync();
-            var modelCategories = categories.Select(s => s.ToCategoryDto());
+            var modelCategories = categories.Select(s => s.ToCategoryWithAricleDto());
             return Ok(modelCategories);
         }
 
@@ -36,7 +36,7 @@ namespace News.Controllers
         {
             var category = await _catRepo.GetByIdAsync(id);
             if (category != null) {
-                return Ok(category.ToCategoryDto());
+                return Ok(category.ToCategoryWithAricleDto());
             }
             return NotFound();
         }

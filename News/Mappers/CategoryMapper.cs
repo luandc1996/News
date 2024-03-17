@@ -17,6 +17,16 @@ namespace News.Mappers
                 Id = categoryModel.Id,
                 Name = categoryModel.Name,
                 Slug = categoryModel.Slug,
+            };
+        }
+
+        public static CategoryDto ToCategoryWithAricleDto(this Category categoryModel)
+        {
+            return new CategoryArticleDto
+            {
+                Id = categoryModel.Id,
+                Name = categoryModel.Name,
+                Slug = categoryModel.Slug,
                 Articles = categoryModel.Articles?.Select(a => a.ToArticleDto()).ToList()
             };
         }
